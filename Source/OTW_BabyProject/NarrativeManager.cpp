@@ -5,10 +5,7 @@
 
 void UNarrativeManager::Initialize()
 {
-	if (CurrentScene)
-	{
-		CurrentDialogue = CurrentScene->DialogueLines[CurrentDialogueIndex];
-	}
+	UE_LOG(LogTemp, Log, TEXT("NarrativeManager initialized"));
 }
 
 UNarrativeManager::UNarrativeManager() : CurrentScene(nullptr), CurrentDialogueIndex(0)
@@ -17,19 +14,29 @@ UNarrativeManager::UNarrativeManager() : CurrentScene(nullptr), CurrentDialogueI
 
 void UNarrativeManager::NextDialogue()
 {
+	if (!CurrentScene || CurrentScene->DialogueLines.Num() == 0)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("No scene or dialogues available"));
+		return;
+	}
+    
+	// Check if we're at the last dialogue BEFORE incrementing
+	if (CurrentDialogueIndex >= CurrentScene->DialogueLines.Num() - 1)
+	{
+		UE_LOG(LogTemp, Log, TEXT("Scene complete, loading next scene"));
+		LoadNextScene();
+		return;
+	}
+	
 	CurrentDialogueIndex++;
+	CurrentDialogue = CurrentScene->DialogueLines[CurrentDialogueIndex];
 
 	if (OnDialogueChanged.IsBound())
 	{
 		OnDialogueChanged.Broadcast(CurrentScene->DialogueLines[CurrentDialogueIndex]);
 	}
-	
-	if (CurrentDialogueIndex >= CurrentScene->DialogueLines.Num())
-	{
-		LoadNextScene();
-		ResetDialogueCount();
-	}
 
+	UE_LOG(LogTemp, Log, TEXT("Advanced to dialogue %d"), CurrentDialogueIndex);
 }
 
 FDialogueLine UNarrativeManager::GetCurrentDialogue() const
@@ -59,15 +66,24 @@ void UNarrativeManager::ResetDialogueCount()
 
 void UNarrativeManager::LoadScene(USceneDataAsset* NewScene)
 {
-	if (NewScene != nullptr)
+	if (NewScene != nullptr && NewScene->DialogueLines.Num() > 0)
 	{
 		CurrentScene = NewScene;
 		ResetDialogueCount();
 
+		CurrentDialogue = CurrentScene->DialogueLines[CurrentDialogueIndex];
+		
 		if (OnSceneChanged.IsBound())
 		{
 			OnSceneChanged.Broadcast(CurrentScene->NextScene);
 		}
+
+		if (OnDialogueChanged.IsBound())
+		{
+			OnDialogueChanged.Broadcast(CurrentDialogue);
+		}
+
+		UE_LOG(LogTemp, Log, TEXT("Loaded scene: %s with %d dialogue lines"), *NewScene->GetName(), NewScene->DialogueLines.Num());
 	}
 }
 

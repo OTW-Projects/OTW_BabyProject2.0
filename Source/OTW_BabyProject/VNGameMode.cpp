@@ -3,6 +3,8 @@
 
 #include "VNGameMode.h"
 
+#include "NarrativeGameInstance.h"
+
 AVNGameMode::AVNGameMode()
 {
 	DefaultPawnClass = nullptr;
@@ -14,13 +16,17 @@ void AVNGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 
-	InitializeGameSystems();
+	UNarrativeGameInstance* GameInstance = Cast<UNarrativeGameInstance>(GetGameInstance());
+
+	if (GameInstance)
+	{
+		InitializeGameSystems();
+	}
 }
 
 void AVNGameMode::InitializeGameSystems()
 {
 	NarrativeManager = NewObject<UNarrativeManager>(this, UNarrativeManager::StaticClass());
-
 	if (!NarrativeManager)
 	{
 		UE_LOG(LogTemp, Error, TEXT("Failed to create NarrativeManager"));
@@ -28,7 +34,6 @@ void AVNGameMode::InitializeGameSystems()
 	}
 
 	UIManager = NewObject<UUIManager>(this, UUIManager::StaticClass());
-
 	if (!UIManager)
 	{
 		UE_LOG(LogTemp, Error, TEXT("Failed to create UIManager"));
@@ -36,18 +41,19 @@ void AVNGameMode::InitializeGameSystems()
 	}
 
 	AVNPlayerController* PlayerController = Cast<AVNPlayerController>(GetWorld()->GetFirstPlayerController());
-
 	if (!PlayerController)
 	{
 		UE_LOG(LogTemp, Error, TEXT("Failed to get VNPlayerController"));
 		return;
 	}
-	
+
 	UIManager->Initialize(PlayerController->WidgetClass, PlayerController);
 
+	// ✅ BIND THE EVENTS - This connects NarrativeManager to UIManager!
+	NarrativeManager->OnDialogueChanged.AddDynamic(this, &AVNGameMode::HandleDialogueChanged);
+	NarrativeManager->OnSceneChanged.AddDynamic(this, &AVNGameMode::HandleSceneChanged);
+
 	StartStory();
-	
-	NarrativeManager->Initialize();
 
 	UE_LOG(LogTemp, Log, TEXT("Game systems initialized successfully"));
 }
@@ -69,5 +75,22 @@ void AVNGameMode::StartStory()
 		{
 			UE_LOG(LogTemp, Error, TEXT("Failed to load starting scene"));
 		}
+	}
+}
+
+void AVNGameMode::HandleDialogueChanged(const FDialogueLine& NewDialogueLine)
+{
+	if (UIManager)
+	{
+		UIManager->ShowDialogueUI(NewDialogueLine.SpeakerName, NewDialogueLine.DialogueText);
+	}
+}
+
+void AVNGameMode::HandleSceneChanged(USceneDataAsset* NewScene)
+{
+	if (UIManager && NewScene)
+	{
+		UIManager->SetBackground(NewScene->BackgroundImage);
+		UE_LOG(LogTemp, Log, TEXT("Scene changed to: %s"), *NewScene->GetName());
 	}
 }

@@ -38,4 +38,10 @@ private:
 	void InitializeGameSystems();
 
 	void StartStory();
+
+	UFUNCTION()
+	void HandleDialogueChanged(const FDialogueLine& NewDialogueLine);
+    
+	UFUNCTION()
+	void HandleSceneChanged(USceneDataAsset* NewScene);
 };
