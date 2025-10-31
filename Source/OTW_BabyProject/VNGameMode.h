@@ -19,6 +19,10 @@ public:
 	
 	AVNGameMode();
 
+	//TEMPORARY -> Refactor later
+	UPROPERTY(EditAnywhere, Category = "Starting Scene")
+	TSoftObjectPtr<USceneDataAsset> StartingScene;
+	
 protected:
 
 	virtual void BeginPlay() override;
@@ -30,10 +34,6 @@ private:
 	
 	UPROPERTY()
 	TObjectPtr<UUIManager> UIManager;
-
-	//TEMPORARY -> Refactor later
-	UPROPERTY(EditAnywhere, Category = "Starting Scene")
-	TSoftObjectPtr<USceneDataAsset> StartingScene;
 
 	void InitializeGameSystems();
 

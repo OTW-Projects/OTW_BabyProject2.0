@@ -8,7 +8,7 @@
 #include "NarrativeGameInstance.generated.h"
 
 
-UCLASS(BLueprintable, BlueprintType)
+UCLASS(Blueprintable, BlueprintType)
 class OTW_BABYPROJECT_API UNarrativeGameInstance : public UGameInstance
 {
 	GENERATED_BODY()

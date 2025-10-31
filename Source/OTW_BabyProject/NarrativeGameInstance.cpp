@@ -10,10 +10,5 @@ void UNarrativeGameInstance::Init()
 	if (!NarrativeManager)
 	{
 		NarrativeManager = NewObject<UNarrativeManager>(this);
-
-		if (NarrativeManager)
-		{
-			NarrativeManager->Initialize();
-		}
 	}
 }

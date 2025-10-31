@@ -15,8 +15,6 @@ void AVNGameMode::BeginPlay()
 	Super::BeginPlay();
 
 	InitializeGameSystems();
-	
-	StartStory();
 }
 
 void AVNGameMode::InitializeGameSystems()
@@ -47,6 +45,8 @@ void AVNGameMode::InitializeGameSystems()
 	
 	UIManager->Initialize(PlayerController->WidgetClass, PlayerController);
 
+	StartStory();
+	
 	NarrativeManager->Initialize();
 
 	UE_LOG(LogTemp, Log, TEXT("Game systems initialized successfully"));

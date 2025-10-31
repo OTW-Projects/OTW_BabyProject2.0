@@ -7,8 +7,6 @@ void UNarrativeManager::Initialize()
 {
 	if (CurrentScene)
 	{
-		LoadScene(CurrentScene);
-		
 		CurrentDialogue = CurrentScene->DialogueLines[CurrentDialogueIndex];
 	}
 }
