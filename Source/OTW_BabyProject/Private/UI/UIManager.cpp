@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "UIManager.h"
+#include "UI/UIManager.h"
 
 void UUIManager::Initialize(TSubclassOf<UUserWidget> InWidgetClass, APlayerController* OwnerController)
 {

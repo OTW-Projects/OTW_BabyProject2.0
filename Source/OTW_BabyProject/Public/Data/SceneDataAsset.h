@@ -26,6 +26,9 @@ class OTW_BABYPROJECT_API USceneDataAsset : public UGameData
 
 public:
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category= "Scene")
+	FName SceneID;
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category= "Scene")
 	FSoftObjectPath BackgroundImage;
 

@@ -1,9 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "VNGameMode.h"
+#include "Core/VNGameMode.h"
 
-#include "NarrativeGameInstance.h"
+#include "Core/NarrativeGameInstance.h"
 
 AVNGameMode::AVNGameMode()
 {

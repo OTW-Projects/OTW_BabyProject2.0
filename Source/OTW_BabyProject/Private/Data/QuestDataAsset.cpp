@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "QuestDataAsset.h"
+#include "Data/QuestDataAsset.h"
 
 const FPrimaryAssetType UQuestDataAsset::QuestAssetType = TEXT("Quest");
 

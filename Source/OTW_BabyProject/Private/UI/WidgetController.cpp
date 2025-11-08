@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "WidgetController.h"
+#include "UI/WidgetController.h"
 
 void UWidgetController::Init(UNarrativeManager* InNarrativeManager, UUIManager* InUIManager)
 {

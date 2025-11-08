@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "GameData.h"
+#include "Data/GameData.h"
 
 FPrimaryAssetId UGameData::GetPrimaryAssetId() const
 {

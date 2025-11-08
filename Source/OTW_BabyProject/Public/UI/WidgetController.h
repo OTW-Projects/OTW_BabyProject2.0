@@ -3,9 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "OTW_BabyProject/SceneDataAsset.h"
-#include "OTW_BabyProject/NarrativeManager.h"
-#include "OTW_BabyProject/UIManager.h"
+#include "OTW_BabyProject/Public/Data/SceneDataAsset.h"
+#include "OTW_BabyProject/Public/Narrative/NarrativeManager.h"
+#include "OTW_BabyProject/Public/UI/UIManager.h"
 #include "UObject/NoExportTypes.h"
 #include "WidgetController.generated.h"
 

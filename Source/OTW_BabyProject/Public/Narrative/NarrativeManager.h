@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
-#include "OTW_BabyProject/SceneDataAsset.h"
+#include "OTW_BabyProject/Public/Data/SceneDataAsset.h"
 #include "NarrativeManager.generated.h"
 
 
