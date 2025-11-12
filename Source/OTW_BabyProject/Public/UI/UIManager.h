@@ -5,19 +5,10 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "UObject/NoExportTypes.h"
+#include "OTW_BabyProject/Public/Types/GameTypes.h"
 #include "UIManager.generated.h"
 
 class APlayerController;
-
-UENUM(BlueprintType)
-enum class EUIState : uint8
-{
-	Hidden,
-	MainMenu,
-	InGame,
-	Paused,
-	Loading
-};
 
 
 UCLASS(Blueprintable, BlueprintType)

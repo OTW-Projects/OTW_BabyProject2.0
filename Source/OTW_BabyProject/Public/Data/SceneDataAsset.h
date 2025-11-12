@@ -6,18 +6,6 @@
 #include "GameData.h"
 #include "SceneDataAsset.generated.h"
 
-USTRUCT(BlueprintType)
-struct FDialogueLine
-{
-	GENERATED_BODY()
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FString SpeakerName;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FString DialogueText;
-};
-
 
 UCLASS()
 class OTW_BABYPROJECT_API USceneDataAsset : public UGameData

@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "GameFramework/PlayerController.h"
+#include "OTW_BabyProject/Public/Types/GameTypes.h"
 #include "VNPlayerController.generated.h"
 
 

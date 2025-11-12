@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "OTW_BabyProject/Public/Types/GameTypes.h"
 #include "OTW_BabyProject/Public/Data/SceneDataAsset.h"
 #include "OTW_BabyProject/Public/Narrative/NarrativeManager.h"
 #include "OTW_BabyProject/Public/UI/UIManager.h"

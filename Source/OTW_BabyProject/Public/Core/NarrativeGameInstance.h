@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
+#include "OTW_BabyProject/Public/Types/GameTypes.h"
 #include "OTW_BabyProject/Public/Narrative/NarrativeManager.h"
 #include "NarrativeGameInstance.generated.h"
 
