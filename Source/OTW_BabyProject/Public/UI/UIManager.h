@@ -3,64 +3,57 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Blueprint/UserWidget.h"
-#include "UObject/NoExportTypes.h"
 #include "OTW_BabyProject/Public/Types/GameTypes.h"
 #include "UIManager.generated.h"
 
+class UUserWidget;
 class APlayerController;
-
 
 UCLASS(Blueprintable, BlueprintType)
 class OTW_BABYPROJECT_API UUIManager : public UObject
 {
 	GENERATED_BODY()
 
-private:
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = UI, meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<UUserWidget> MainGameWidget;
-	
-	UPROPERTY()
-	EUIState CurrentState = EUIState::Hidden;
-	
 public:
-
-	UFUNCTION(BlueprintCallable)
+	// Initialization
+	UFUNCTION(BlueprintCallable, Category = "UI")
 	void Initialize(TSubclassOf<UUserWidget> InWidgetClass, APlayerController* OwnerController);
 
-	UFUNCTION(BlueprintCallable)
-	void ShowDialogueUI(const FString& SpeakerName, const FString& DialogueText);
+	// UI updates (called by GameMode in response to narrative events)
+	UFUNCTION(BlueprintCallable, Category = "UI")
+	void UpdateDialogue(const FString& SpeakerName, const FString& DialogueText);
 
-	UFUNCTION(BlueprintCallable)
-	void SetBackground(const FSoftObjectPath& BackgroundImagePath);
+	UFUNCTION(BlueprintCallable, Category = "UI")
+	void UpdateBackground(const FSoftObjectPath& BackgroundImagePath);
 
-	UFUNCTION(BlueprintCallable)
+	// UI visibility
+	UFUNCTION(BlueprintCallable, Category = "UI")
 	void ShowGameUI();
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "UI")
 	void HideGameUI();
 
-	UFUNCTION(BlueprintCallable)
+	// UI state management
+	UFUNCTION(BlueprintCallable, Category = "UI")
 	void SetUIState(EUIState NewState);
-	
-	UFUNCTION(BlueprintCallable)
-	void ShowSceneTransitionUI();
 
-	UFUNCTION(BlueprintImplementableEvent)
+	UFUNCTION(BlueprintPure, Category = "UI")
+	EUIState GetUIState() const { return CurrentState; }
+
+	// Blueprint implementable events for custom UI logic
+	UFUNCTION(BlueprintImplementableEvent, Category = "UI")
 	void BP_OnDialogueChanged(const FString& Speaker, const FString& Text);
 	
-	UFUNCTION(BlueprintImplementableEvent)
+	UFUNCTION(BlueprintImplementableEvent, Category = "UI")
 	void BP_OnBackgroundChanged(const FSoftObjectPath& BackgroundImagePath);
 	
-	UFUNCTION(BlueprintImplementableEvent)
+	UFUNCTION(BlueprintImplementableEvent, Category = "UI")
 	void BP_OnUIStateChanged(EUIState NewState);
 
 private:
-
-	void CreateMainGameWidget(TSubclassOf<UUserWidget> WidgetClass, APlayerController* OwnerController);
-
-	void UpdateDialogueWidget(const FString& Speaker, const FString& Text);
-
-	void UpdateBackgroundWidget(const FSoftObjectPath& BackgroundPath);
+	UPROPERTY()
+	TObjectPtr<UUserWidget> MainGameWidget;
+	
+	UPROPERTY()
+	EUIState CurrentState;
 };

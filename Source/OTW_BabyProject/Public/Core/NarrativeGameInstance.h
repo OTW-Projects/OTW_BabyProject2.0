@@ -4,8 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
-#include "OTW_BabyProject/Public/Types/GameTypes.h"
-#include "OTW_BabyProject/Public/Narrative/NarrativeManager.h"
 #include "NarrativeGameInstance.generated.h"
 
 
@@ -18,11 +16,6 @@ public:
 
 	virtual void Init() override;
 
-	UFUNCTION(BlueprintCallable)
-	UNarrativeManager* GetNarrativeManager() const { return NarrativeManager; }
-
-private:
-
-	UPROPERTY()
-	UNarrativeManager* NarrativeManager;
+	// TODO: Add save/load functionality here
+	// TODO: Add persistent game settings here
 };

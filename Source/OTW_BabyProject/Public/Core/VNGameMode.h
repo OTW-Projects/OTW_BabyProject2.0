@@ -4,12 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "OTW_BabyProject/Public/Types/GameTypes.h"
-#include "OTW_BabyProject/Public/Data/SceneDataAsset.h"
-#include "OTW_BabyProject/Public/Narrative/NarrativeManager.h"
-#include "OTW_BabyProject/Public/UI/UIManager.h"
-#include "OTW_BabyProject/Public/Core/VNPlayerController.h"
 #include "GameFramework/GameModeBase.h"
 #include "VNGameMode.generated.h"
+
+class USceneDataAsset;
+class UNarrativeManager;
+class UUIManager;
+class AVNPlayerController;
 
 UCLASS()
 class OTW_BABYPROJECT_API AVNGameMode : public AGameModeBase
@@ -24,12 +25,16 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Starting Scene")
 	TSoftObjectPtr<USceneDataAsset> StartingScene;
 	
-protected:
+	UFUNCTION(BlueprintPure, Category = "Game Systems")
+	UNarrativeManager* GetNarrativeManager() const { return NarrativeManager; }
 
+	UFUNCTION(BlueprintPure, Category = "Game Systems")
+	UUIManager* GetUIManager() const { return UIManager; }
+	
+protected:
 	virtual void BeginPlay() override;
 
 private:
-
 	UPROPERTY()
 	TObjectPtr<UNarrativeManager> NarrativeManager;
 	
@@ -37,9 +42,9 @@ private:
 	TObjectPtr<UUIManager> UIManager;
 
 	void InitializeGameSystems();
-
 	void StartStory();
 
+	// Event handlers - bridge between Narrative and UI
 	UFUNCTION()
 	void HandleDialogueChanged(const FDialogueLine& NewDialogueLine);
     

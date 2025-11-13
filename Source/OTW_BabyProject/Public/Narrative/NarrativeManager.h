@@ -3,10 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UObject/NoExportTypes.h"
-#include "OTW_BabyProject/Public/Data/SceneDataAsset.h"
+#include "Types/GameTypes.h"
 #include "NarrativeManager.generated.h"
 
+class USceneDataAsset;
 
 UCLASS(BlueprintType)
 class OTW_BABYPROJECT_API UNarrativeManager : public UObject
@@ -14,7 +14,7 @@ class OTW_BABYPROJECT_API UNarrativeManager : public UObject
 	GENERATED_BODY()
 
 public:
-
+	// Events
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDialogueChanged, const FDialogueLine&, NewDialogueLine);
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnSceneChanged, USceneDataAsset*, NewScene);
 
@@ -23,42 +23,36 @@ public:
 	
 	UPROPERTY(BlueprintAssignable, Category = "Narrative Events")
 	FOnSceneChanged OnSceneChanged;
-	
-	void Initialize();
 
-	UNarrativeManager();
-	
-	UFUNCTION(BlueprintCallable)
+	// Scene management
+	UFUNCTION(BlueprintCallable, Category = "Narrative")
 	void LoadScene(USceneDataAsset* NewScene);
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "Narrative")
 	void LoadNextScene();
 
-	UFUNCTION(BlueprintCallable)
+	// Dialogue progression
+	UFUNCTION(BlueprintCallable, Category = "Narrative")
 	void NextDialogue();
 
 	// Getters
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintPure, Category = "Narrative")
 	FDialogueLine GetCurrentDialogue() const;
     
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintPure, Category = "Narrative")
 	USceneDataAsset* GetCurrentScene() const { return CurrentScene; }
     
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintPure, Category = "Narrative")
 	int32 GetCurrentDialogueIndex() const { return CurrentDialogueIndex; }
     
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintPure, Category = "Narrative")
 	bool IsSceneComplete() const;
 
 private:
-
-	void ResetDialogueCount();
+	void ResetDialogueIndex();
 	
-	int32 CurrentDialogueIndex = 0;
+	UPROPERTY()
+	TObjectPtr<USceneDataAsset> CurrentScene;
 
-	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = true))
-	USceneDataAsset* CurrentScene;
-
-	UPROPERTY(BlueprintReadOnly, meta = (AllowPrivateAccess = true))
-	FDialogueLine CurrentDialogue;
+	int32 CurrentDialogueIndex;
 };

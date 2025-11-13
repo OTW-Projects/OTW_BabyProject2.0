@@ -7,8 +7,8 @@ void UNarrativeGameInstance::Init()
 {
 	Super::Init();
 
-	if (!NarrativeManager)
-	{
-		NarrativeManager = NewObject<UNarrativeManager>(this);
-	}
+	UE_LOG(LogTemp, Log, TEXT("NarrativeGameInstance: Initialized"));
+	
+	// Future: Load saved game data here
+	// Future: Initialize persistent systems here
 }
