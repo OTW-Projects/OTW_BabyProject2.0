@@ -38,18 +38,16 @@ void UUIManager::UpdateDialogue(const FString& SpeakerName, const FString& Dialo
 		UE_LOG(LogTemp, Warning, TEXT("UIManager: Trying to show dialogue while not in game state"));
 		return;
 	}
-
-	// Call Blueprint event for custom UI update logic
-	BP_OnDialogueChanged(SpeakerName, DialogueText);
-
+ 
+	OnDialogueUpdate.Broadcast(SpeakerName, DialogueText);
+	
 	UE_LOG(LogTemp, Log, TEXT("UIManager: Updated dialogue - %s: %s"), *SpeakerName, *DialogueText);
 }
 
 void UUIManager::UpdateBackground(const FSoftObjectPath& BackgroundImagePath)
 {
-	// Call Blueprint event for custom background update logic
-	BP_OnBackgroundChanged(BackgroundImagePath);
-
+	OnBackgroundUpdate.Broadcast(BackgroundImagePath);
+	
 	UE_LOG(LogTemp, Log, TEXT("UIManager: Updated background - %s"), *BackgroundImagePath.ToString());
 }
 
@@ -89,7 +87,7 @@ void UUIManager::SetUIState(EUIState NewState)
 	EUIState OldState = CurrentState;
 	CurrentState = NewState;
 
-	BP_OnUIStateChanged(NewState);
+	OnUIStateChanged.Broadcast(NewState);
 
 	UE_LOG(LogTemp, Log, TEXT("UIManager: UI state changed from %d to %d"), 
 		static_cast<int32>(OldState), static_cast<int32>(NewState));

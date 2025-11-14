@@ -9,12 +9,26 @@
 class UUserWidget;
 class APlayerController;
 
-UCLASS(Blueprintable, BlueprintType)
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnDialogueUpdateSignature, const FString&, Speaker, const FString&, Text);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnBackgroundUpdateSignature, const FSoftObjectPath&, BackgroundPath);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnUIStateChangedSignature, EUIState, NewState);
+
+UCLASS()
 class OTW_BABYPROJECT_API UUIManager : public UObject
 {
 	GENERATED_BODY()
 
 public:
+
+	UPROPERTY(BlueprintAssignable, Category = "UI Events")
+	FOnDialogueUpdateSignature OnDialogueUpdate;
+	
+	UPROPERTY(BlueprintAssignable, Category = "UI Events")
+	FOnBackgroundUpdateSignature OnBackgroundUpdate;
+	
+	UPROPERTY(BlueprintAssignable, Category = "UI Events")
+	FOnUIStateChangedSignature OnUIStateChanged;
+	
 	// Initialization
 	UFUNCTION(BlueprintCallable, Category = "UI")
 	void Initialize(TSubclassOf<UUserWidget> InWidgetClass, APlayerController* OwnerController);
@@ -40,16 +54,9 @@ public:
 	UFUNCTION(BlueprintPure, Category = "UI")
 	EUIState GetUIState() const { return CurrentState; }
 
-	// Blueprint implementable events for custom UI logic
-	UFUNCTION(BlueprintImplementableEvent, Category = "UI")
-	void BP_OnDialogueChanged(const FString& Speaker, const FString& Text);
+	UFUNCTION(BlueprintPure, Category = "UI")
+	UUserWidget* GetMainWidget() const { return MainGameWidget; }
 	
-	UFUNCTION(BlueprintImplementableEvent, Category = "UI")
-	void BP_OnBackgroundChanged(const FSoftObjectPath& BackgroundImagePath);
-	
-	UFUNCTION(BlueprintImplementableEvent, Category = "UI")
-	void BP_OnUIStateChanged(EUIState NewState);
-
 private:
 	UPROPERTY()
 	TObjectPtr<UUserWidget> MainGameWidget;
