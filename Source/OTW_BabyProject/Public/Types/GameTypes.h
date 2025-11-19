@@ -46,7 +46,6 @@ struct FDialogueLine
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Dialogue", meta = (MultiLine = true))
 	FString DialogueText;
 
-	// Optional: Character data for more complex systems
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Dialogue")
 	TSoftObjectPtr<UCharacterDataAsset> Speaker;
 
