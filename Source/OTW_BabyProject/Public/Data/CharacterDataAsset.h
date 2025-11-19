@@ -19,4 +19,7 @@ public:
 	static const FPrimaryAssetType CharacterAssetType;
 	
 	virtual FPrimaryAssetId GetPrimaryAssetId() const override;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category= "Character")
+	FSoftObjectPath CharacterAsset;
 };

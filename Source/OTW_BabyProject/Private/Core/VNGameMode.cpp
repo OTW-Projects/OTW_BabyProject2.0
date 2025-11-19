@@ -96,3 +96,4 @@ void AVNGameMode::HandleSceneChanged(USceneDataAsset* NewScene)
 	UIManager->UpdateBackground(NewScene->BackgroundImage);
 	UE_LOG(LogTemp, Log, TEXT("VNGameMode: Scene changed to '%s'"), *NewScene->GetName());
 }
+
