@@ -1,8 +1,9 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
+// © 2025 Open To Work - Samuel Abel
 
 #include "Narrative/NarrativeManager.h"
 #include "Data/SceneDataAsset.h"
+
+class AGameStateManager;
 
 void UNarrativeManager::LoadScene(USceneDataAsset* NewScene)
 {
@@ -59,7 +60,16 @@ void UNarrativeManager::NextDialogue()
 		UE_LOG(LogTemp, Warning, TEXT("NarrativeManager: Current scene has no dialogues"));
 		return;
 	}
+
+	FDialogueLine CurrentLine = GetCurrentDialogue();
     
+	if (CurrentLine.bHasChoice)
+	{
+		// Stop auto-progression, wait for player choice
+		OnChoicesPresented.Broadcast(CurrentLine.Choices);
+		return;
+	}
+	
 	// Check if we're at the last dialogue
 	if (IsSceneComplete())
 	{
@@ -100,4 +110,43 @@ bool UNarrativeManager::IsSceneComplete() const
 void UNarrativeManager::ResetDialogueIndex()
 {
 	CurrentDialogueIndex = 0;
+}
+
+void UNarrativeManager::ProcessChoice(int32 ChoiceIndex)
+{
+	FDialogueLine CurrentLine = GetCurrentDialogue();
+    
+	if (!CurrentLine.bHasChoice || !CurrentLine.Choices.IsValidIndex(ChoiceIndex))
+	{
+		UE_LOG(LogTemp, Error, TEXT("Invalid choice index: %d"), ChoiceIndex);
+		return;
+	}
+
+	FChoiceOption SelectedChoice = CurrentLine.Choices[ChoiceIndex];
+
+	// Apply consequences
+	// AGameStateManager* GameState = GetGameStateManager();
+	// for (const FChoiceConsequence& Consequence : SelectedChoice.Consequences)
+	// {
+	// 	if (GameState)
+	// 	{
+	// 		GameState->ApplyConsequence(Consequence);
+	// 	}
+	// }
+
+	// Navigate based on choice
+	if (SelectedChoice.NextScene)
+	{
+		LoadScene(SelectedChoice.NextScene.LoadSynchronous());
+	}
+	else if (SelectedChoice.NextDialogueIndex >= 0)
+	{
+		CurrentDialogueIndex = SelectedChoice.NextDialogueIndex;
+		OnDialogueChanged.Broadcast(GetCurrentDialogue());
+	}
+	else
+	{
+		// Continue normally
+		NextDialogue();
+	}
 }

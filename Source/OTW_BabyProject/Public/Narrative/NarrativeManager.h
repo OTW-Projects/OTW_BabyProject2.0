@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// © 2025 Open To Work - Samuel Abel
 
 #pragma once
 
@@ -17,7 +17,11 @@ public:
 	// Events
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnDialogueChanged, const FDialogueLine&, NewDialogueLine);
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnSceneChanged, USceneDataAsset*, NewScene);
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnChoicesPresented, const TArray<FChoiceOption>&, Choices);
 
+	UPROPERTY(BlueprintAssignable, Category = "Narrative Events")
+	FOnChoicesPresented OnChoicesPresented;
+	
 	UPROPERTY(BlueprintAssignable, Category = "Narrative Events")
 	FOnDialogueChanged OnDialogueChanged;
 	
@@ -50,7 +54,8 @@ public:
 
 private:
 	void ResetDialogueIndex();
-	
+	void ProcessChoice(int32 ChoiceIndex);
+
 	UPROPERTY()
 	TObjectPtr<USceneDataAsset> CurrentScene;
 
