@@ -44,11 +44,21 @@ void AGameStateManager::SetRelationship(FName CharacterName, float Value)
 
 void AGameStateManager::ModifyStat(FName StatName, float Delta)
 {
+    if (!Delta || Delta < 0.0f)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("GameStateManager: Trying to modify stat with an invalid Delta parameter."));
+		return;
+	}
 	Stats[StatName] += Delta;
 }
 
 void AGameStateManager::ModifyRelationship(FName CharacterName, float Delta)
 {
+    if (!Delta || Delta < 0.0f)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("GameStateManager: Trying to modify relationship with an invalid Delta parameter."));
+		return;
+	}
 	Relationships[CharacterName] += Delta;
 }
 

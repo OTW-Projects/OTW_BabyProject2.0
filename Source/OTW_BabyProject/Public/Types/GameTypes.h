@@ -40,10 +40,10 @@ enum class EConsequenceType : uint8
 	ModifyStat UMETA(DisplayName = "Modify Stat"),
 	SetFlag UMETA(DisplayName = "Set Flag"),
 	ModifyRelationship UMETA(DisplayName = "Modify Relationship"),
-	// GiveItem UMETA(DisplayName = "Give Item"),
-	// RemoveItem UMETA(DisplayName = "Remove Item"),
-	// UnlockScene UMETA(DisplayName = "Unlock Scene"),
-	// CustomEvent UMETA(DisplayName = "Custom Event")
+	GiveItem UMETA(DisplayName = "Give Item"),
+	RemoveItem UMETA(DisplayName = "Remove Item"),
+	UnlockScene UMETA(DisplayName = "Unlock Scene"),
+	CustomEvent UMETA(DisplayName = "Custom Event")
 };
 
 UENUM(BlueprintType)
