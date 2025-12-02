@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameStateManager.h"
 #include "Types/GameTypes.h"
 #include "NarrativeManager.generated.h"
 
@@ -52,9 +53,11 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Narrative")
 	bool IsSceneComplete() const;
 
+	UFUNCTION(BlueprintCallable, Category = "Narrative")
+	void ProcessChoice(int32 ChoiceIndex, AGameStateManager* GameStateManager);
+	
 private:
 	void ResetDialogueIndex();
-	void ProcessChoice(int32 ChoiceIndex);
 
 	UPROPERTY()
 	TObjectPtr<USceneDataAsset> CurrentScene;

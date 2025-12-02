@@ -3,8 +3,6 @@
 #include "Narrative/NarrativeManager.h"
 #include "Data/SceneDataAsset.h"
 
-class AGameStateManager;
-
 void UNarrativeManager::LoadScene(USceneDataAsset* NewScene)
 {
 	if (!NewScene)
@@ -112,7 +110,7 @@ void UNarrativeManager::ResetDialogueIndex()
 	CurrentDialogueIndex = 0;
 }
 
-void UNarrativeManager::ProcessChoice(int32 ChoiceIndex)
+void UNarrativeManager::ProcessChoice(int32 ChoiceIndex, AGameStateManager* GameStateManager)
 {
 	FDialogueLine CurrentLine = GetCurrentDialogue();
     
@@ -124,15 +122,14 @@ void UNarrativeManager::ProcessChoice(int32 ChoiceIndex)
 
 	FChoiceOption SelectedChoice = CurrentLine.Choices[ChoiceIndex];
 
-	// Apply consequences
-	// AGameStateManager* GameState = GetGameStateManager();
-	// for (const FChoiceConsequence& Consequence : SelectedChoice.Consequences)
-	// {
-	// 	if (GameState)
-	// 	{
-	// 		GameState->ApplyConsequence(Consequence);
-	// 	}
-	// }
+	//Apply consequences
+	for (const FChoiceConsequence& Consequence : SelectedChoice.Consequences)
+	{
+		if (GameStateManager)
+		{
+			GameStateManager->ApplyConsequence(Consequence);
+		}
+	}
 
 	// Navigate based on choice
 	if (SelectedChoice.NextScene)

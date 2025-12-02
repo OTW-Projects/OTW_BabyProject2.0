@@ -10,6 +10,7 @@ AVNGameMode::AVNGameMode()
 {
 	DefaultPawnClass = nullptr;
 	PlayerControllerClass = AVNPlayerController::StaticClass();
+	GameStateManager = Cast<AGameStateManager>(GameStateClass);
 }
 
 void AVNGameMode::BeginPlay()

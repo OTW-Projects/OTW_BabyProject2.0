@@ -22,4 +22,7 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category= "Character")
 	FSoftObjectPath CharacterAsset;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category= "Character")
+	FCharacterStats CharacterStats;
 };
