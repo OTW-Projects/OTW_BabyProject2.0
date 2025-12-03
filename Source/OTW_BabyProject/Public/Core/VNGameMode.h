@@ -11,6 +11,7 @@ class USceneDataAsset;
 class UNarrativeManager;
 class UUIManager;
 class AVNPlayerController;
+class AGameStateManager;
 
 UCLASS()
 class OTW_BABYPROJECT_API AVNGameMode : public AGameModeBase
@@ -30,6 +31,9 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "Game Systems")
 	UUIManager* GetUIManager() const { return UIManager; }
+
+	UFUNCTION(BlueprintPure, Category = "Game Systems")
+	AGameStateManager* GetGameStateManager() const { return GameStateManager; }
 	
 protected:
 	virtual void BeginPlay() override;
@@ -41,6 +45,9 @@ private:
 	UPROPERTY()
 	TObjectPtr<UUIManager> UIManager;
 
+	UPROPERTY()
+	TObjectPtr<AGameStateManager> GameStateManager;
+	
 	void InitializeGameSystems();
 	void StartStory();
 

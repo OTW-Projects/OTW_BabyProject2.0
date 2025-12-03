@@ -55,6 +55,18 @@ enum class EOperation : uint8
 	Multiply UMETA(DisplayName = "Multiply")
 };
 
+USTRUCT(BLueprintType)
+struct FCharacterStats
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float Awareness;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float Stress;
+};
+
 /**
  * Single line of dialogue
  */
@@ -74,7 +86,7 @@ struct FChoiceConsequence
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float Value;
-
+	
 	FChoiceConsequence()
 		: Type(EConsequenceType::ModifyStat)
 		, Target(NAME_None)
