@@ -7,6 +7,7 @@
 #include "GameFramework/GameModeBase.h"
 #include "VNGameMode.generated.h"
 
+class USaveManager;
 class USceneDataAsset;
 class UNarrativeManager;
 class UUIManager;
@@ -34,6 +35,18 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "Game Systems")
 	AGameStateManager* GetGameStateManager() const { return GameStateManager; }
+
+	UFUNCTION(BlueprintCallable, Category = "Save System")
+	bool SaveGame(const FString& SlotName);
+    
+	UFUNCTION(BlueprintCallable, Category = "Save System")
+	bool LoadGame(const FString& SlotName);
+    
+	UFUNCTION(BlueprintCallable, Category = "Save System")
+	bool QuickSave();
+    
+	UFUNCTION(BlueprintCallable, Category = "Save System")
+	bool QuickLoad();
 	
 protected:
 	virtual void BeginPlay() override;
@@ -47,6 +60,12 @@ private:
 
 	UPROPERTY()
 	TObjectPtr<AGameStateManager> GameStateManager;
+
+	FVNSaveData GatherSaveData() const;
+
+	void ApplySaveData(const FVNSaveData& SaveData);
+    
+	USaveManager* GetSaveManager() const;
 	
 	void InitializeGameSystems();
 	void StartStory();

@@ -2,6 +2,21 @@
 
 #include "Narrative/GameStateManager.h"
 
+TMap<FName, bool> AGameStateManager::GetAllFlags() const
+{
+	return Flags;
+}
+
+TMap<FName, float> AGameStateManager::GetAllStats() const
+{
+	return Stats;
+}
+
+TMap<FName, float> AGameStateManager::GetAllRelationships() const
+{
+	return Relationships;
+}
+
 bool AGameStateManager::GetFlag(FName FlagName) const
 {
 	return Flags[FlagName];

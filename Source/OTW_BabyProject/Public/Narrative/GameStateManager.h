@@ -15,8 +15,16 @@ class OTW_BABYPROJECT_API AGameStateManager : public AGameStateBase
 	GENERATED_BODY()
 	
 	TMap<FName, bool> Flags;
+
+public:
+	[[nodiscard]] TMap<FName, bool> GetAllFlags() const;
+	[[nodiscard]] TMap<FName, float> GetAllStats() const;
+	[[nodiscard]] TMap<FName, float> GetAllRelationships() const;
+
+private:
 	TMap<FName, float> Stats;
 	TMap<FName, float> Relationships;
+	
 
 public:
 

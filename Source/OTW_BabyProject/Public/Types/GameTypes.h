@@ -55,6 +55,43 @@ enum class EOperation : uint8
 	Multiply UMETA(DisplayName = "Multiply")
 };
 
+USTRUCT(BlueprintType)
+struct FVNSaveData
+{
+	GENERATED_BODY()
+
+	UPROPERTY(BlueprintReadWrite)
+	FDateTime SaveDateTime;
+    
+	UPROPERTY(BlueprintReadWrite)
+	FString SaveSlotName;
+	
+	UPROPERTY(BlueprintReadWrite)
+	FString CurrentSceneId;
+
+	UPROPERTY(BlueprintReadWrite)
+	int32 CurrentDialogueIndex;
+
+	UPROPERTY(BlueprintReadWrite)
+	TMap<FName, bool> Flags;
+	
+	UPROPERTY(BlueprintReadWrite)
+	TMap<FName, float> Stats;
+	
+	UPROPERTY(BlueprintReadWrite)
+	TMap<FName, float> Relationships;
+
+	UPROPERTY(BlueprintReadWrite)
+	TArray<FString> ChoiceHistory;
+
+	FVNSaveData()
+		: SaveDateTime(FDateTime::Now())
+		, SaveSlotName(TEXT(""))
+		, CurrentSceneId(TEXT(""))
+		, CurrentDialogueIndex(0)
+	{}
+};
+
 USTRUCT(BLueprintType)
 struct FCharacterStats
 {
@@ -67,9 +104,7 @@ struct FCharacterStats
 	float Stress;
 };
 
-/**
- * Single line of dialogue
- */
+
 USTRUCT(BlueprintType)
 struct FChoiceConsequence
 {
@@ -79,7 +114,7 @@ struct FChoiceConsequence
 	EConsequenceType Type;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FName Target; // "JohnRelationship", "HasKey", etc.
+	FName Target; 
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	EOperation Operation;
@@ -101,16 +136,16 @@ struct FChoiceOption
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FString ChoiceText; // "Help the stranger"
+	FString ChoiceText; 
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TSoftObjectPtr<USceneDataAsset> NextScene; // Optional: jump to new scene
+	TSoftObjectPtr<USceneDataAsset> NextScene; 
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 NextDialogueIndex; // Optional: jump within same scene (-1 = continue normally)
+	int32 NextDialogueIndex; 
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TArray<FChoiceConsequence> Consequences; // What happens if chosen
+	TArray<FChoiceConsequence> Consequences;
 
 	// Future: requirements to show/enable this choice
 	// UPROPERTY(EditAnywhere, BlueprintReadWrite)
